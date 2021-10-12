@@ -22,6 +22,7 @@ class App extends React.Component {
             <Switch>
 
               <Route exact path="/">
+                {console.log(this.props.auth0.isAuthenticated)}
                 {this.props.auth0.isAuthenticated ? <MyFavorites /> : <Login />}
               </Route>
 
