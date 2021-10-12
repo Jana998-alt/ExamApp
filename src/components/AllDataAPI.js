@@ -22,9 +22,24 @@ class AllDataAPI extends Component {
         await this.setState({
             pLanguages: pLanguages.data,
         })
-        console.log(this.state.pLanguages);
+        // console.log(this.props.auth0.user.email);
     }
 
+
+    addToFav = async(pLInfo) =>{
+
+        let Info = {
+            email: this.props.auth0.user.email,
+            id : pLInfo.id,
+            title: pLInfo.title,
+            dateCreated: pLInfo.dateCreated,
+            description: pLInfo.description,
+            imageUrl: pLInfo.imageUrl,
+        }
+        
+        let addedtofav = await axios.post(`${process.env.REACT_APP_SERVER}/addtofav`, Info);
+        console.log(addedtofav);
+    }
 
     render() {
         return (
@@ -33,7 +48,7 @@ class AllDataAPI extends Component {
                 <h3>Select your favorites :)</h3>
 
                 {this.state.pLanguages.map((element, idx) => {
-                    return (<Cards pLanguagesInfo={this.state.pLanguages[idx]} />)
+                    return (<Cards pLanguagesInfo={this.state.pLanguages[idx]} addToFav={this.addToFav}/>)
                     // pLanguagesInfo is an OBJECT with the info needed for the current card
                 })}
 
